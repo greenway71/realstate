@@ -1,0 +1,4 @@
+hello
+
+use this command to learn linux command line
+
