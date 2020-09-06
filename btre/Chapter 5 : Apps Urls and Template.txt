@@ -1,0 +1,86 @@
+Chapter 5 : Apps Urls and Template
+
+Creating the Pages App.
+Commands:
+python manage.py startapp Pages
+then goto btre >> settings.py
+then goto Installed apps section
+and add this to the list
+pages.apps.PagesConfig
+
+Here PagesConfig came from Pages(apps.py ko class)
+
+pip install autopep8 (for dependencies)
+
+Inside Pages create Urls.py file
+
+in urls.py
+from django.urls import path
+add this >>>>>>>from . import views
+urlpatterns = [
+    path('',views.index,name='index')
+]
+
+here index is method
+
+in views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def  index (request):
+    return HttpResponse('<h1>Hello World</h1>')
+
+goto urls.py of btre
+
+from django.contrib import admin
+from django.urls import path , include
+
+urlpatterns = [
+    path('', include('pages.urls')),
+    path('admin/', admin.site.urls),
+]
+
+here we add path('', include('pages.urls')),
+and add include in (from django.urls import path , include)
+because use django .http package 
+
+
+
+
+PAGES TEMPLATE AND BASE LAYOUT 
+
+goto setting.py 
+and add this  [os.path.join(BASE_DIR, 'templates')], to TEMPLATE
+as shown below:
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+
+add new folder called templates and add new sub-folder pages
+inside that folder add two file about.html  and home.html.
+
+
+inside pages in urls.py add this
+  path('about',views.about, name='about'),
+
+
+  inside views.py add this
+
+  from django.shortcuts import render
+from django.http import HttpResponse
+
+def  index (request):
+    return render(request, 'pages/index.html')
+
+def about (request):
+    return render(request, 'pages/about.html')
+
